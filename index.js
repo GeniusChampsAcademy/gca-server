@@ -9,7 +9,14 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors({ origin: "*" }));
+app.use(
+  cors({
+    origin: "https://gca-hvgdbg725-rushikesh-bhands-projects.vercel.app",
+    methods: ["GET", "POST"], // Specify allowed HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
+  })
+);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -17,7 +24,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use((err, req, res, next) => {
   if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
     console.error("Invalid JSON:", err.message);
-    return res.status(400).json({ success: false, message: "Invalid JSON format" });
+    return res
+      .status(400)
+      .json({ success: false, message: "Invalid JSON format" });
   }
   next();
 });
@@ -55,17 +64,23 @@ app.post("/api/contact", async (req, res) => {
 
   let mailOptions = {
     from: `"${name}" <${email}>`,
-    to: "rushikeshgbhand@gmail.com",
+    to: "geniuschampsacademy@gmail.com",
     subject: "New Contact Us Form Submission",
     text: `Name: ${name}\nContact Number: ${contact}\nEmail: ${email}\nService: ${service}\nMessage: ${message}`,
   };
 
   try {
     await transporter.sendMail(mailOptions);
-    res.status(200).json({ success: true, message: "Email sent successfully!" });
+    res
+      .status(200)
+      .json({ success: true, message: "Email sent successfully!" });
   } catch (error) {
     console.error("Failed to send email:", error);
-    res.status(500).json({ success: false, message: "Failed to send email", error: error.message });
+    res.status(500).json({
+      success: false,
+      message: "Failed to send email",
+      error: error.message,
+    });
   }
 });
 
