@@ -11,7 +11,7 @@ const port = process.env.PORT || 5000;
 // Middleware
 app.use(
   cors({
-    origin: "https://gca-hvgdbg725-rushikesh-bhands-projects.vercel.app",
+    origin: "*",
     methods: ["GET", "POST"], // Specify allowed HTTP methods
     allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
   })
@@ -64,7 +64,7 @@ app.post("/api/contact", async (req, res) => {
 
   let mailOptions = {
     from: `"${name}" <${email}>`,
-    to: "geniuschampsacademy@gmail.com",
+    to: "Geniuschampsacademy@gmail.com",
     subject: "New Contact Us Form Submission",
     text: `Name: ${name}\nContact Number: ${contact}\nEmail: ${email}\nService: ${service}\nMessage: ${message}`,
   };
