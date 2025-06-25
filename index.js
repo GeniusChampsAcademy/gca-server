@@ -8,14 +8,7 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-// Middleware
-app.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST"], // Specify allowed HTTP methods
-    allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
-  })
-);
+app.use(cors({ origin: process.env.FRONTEND_URL }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -64,7 +57,7 @@ app.post("/api/contact", async (req, res) => {
 
   let mailOptions = {
     from: `"${name}" <${email}>`,
-    to: "Geniuschampsacademy@gmail.com",
+    to: "geniuschampacademy@gmail.com",
     subject: "New Contact Us Form Submission",
     text: `Name: ${name}\nContact Number: ${contact}\nEmail: ${email}\nService: ${service}\nMessage: ${message}`,
   };
